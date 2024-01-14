@@ -1,0 +1,65 @@
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    background-color: darkgray;
+    margin: 2px;
+    cursor: pointer;
+    border: 0;
+    font-size: 22px;
+    color: #333;
+    opacity: 1;
+}
+
+.cell:disabled {
+    cursor:crosshair;
+    background-color: lightgray;
+}
+
+.cell:hover:not(:disabled) {
+    opacity: 0.8;
+}
+
+.num1 {
+    color: blue;
+}
+
+.num2 {
+    color: green;
+}
+
+.num3 {
+    color: red;
+}
+
+.num4 {
+    color: darkblue;
+}
+
+.num5 {
+    color: darkred;
+}
+
+.num6 {
+    color: darkcyan;
+}
+
+.num7 {
+    color: black;
+}
+
+.num8 {
+    color: gray;
+}
+
+.mine {
+    background-color: crimson;
+    color: #333;
+}
+
+.possibleMine {
+    background-color: cadetblue;
+    color: #333;
+}
