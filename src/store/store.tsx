@@ -26,7 +26,7 @@ const useStore = create<IStore>((set, get) => ({
 	togglePlaying: () => set({ playing: !get().playing }),
 	resetGame: () => {
 		get().generateNewBoard()
-		set({ playing: true, mines: { total: 10, discovered: 0 } })
+		set({ playing: true, mines: { ...get().mines, discovered: 0 } })
 		set({ mines: { ...get().mines, discovered: 0 } })
 	},
 }))

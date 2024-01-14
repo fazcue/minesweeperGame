@@ -15,9 +15,8 @@ const wonModal = (resetGame: () => void) => {
 const lostModal = (resetGame: () => void) => {
 	Swal.fire({
 		icon: 'error',
-		title: 'Nooooo! You lost',
+		title: 'You lost',
 		confirmButtonText: 'Play again',
-		cancelButtonText: 'Quit',
 	}).then((result) => {
 		if (result.isConfirmed) {
 			resetGame()
