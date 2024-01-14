@@ -65,9 +65,11 @@ export default function Cell({ cell }: Props): JSX.Element {
 	return (
 		<button
 			key={cell.id}
-			className={`${styles.cell} ${value ? styles['num' + value] : ''} ${
-				isMine ? styles.mine : ''
-			} ${isPossibleMine ? styles.possibleMine : ''}`}
+			className={`${styles.cell} ${
+				revealed && value ? styles['num' + value] : ''
+			} ${isMine ? styles.mine : ''} ${
+				isPossibleMine ? styles.possibleMine : ''
+			}`}
 			onClick={onClick}
 			onContextMenu={(e) => {
 				toggleMine(e)
