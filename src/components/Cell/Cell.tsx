@@ -73,6 +73,7 @@ export default function Cell({ cell }: Props): JSX.Element {
 				toggleMine(e)
 			}}
 			disabled={revealed}
+			id={cell.id}
 		>
 			{revealed ? value : isMine || isPossibleMine ? '💣' : null}
 		</button>

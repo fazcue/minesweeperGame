@@ -16,8 +16,8 @@ interface IStore {
 
 const useStore = create<IStore>((set, get) => ({
 	playing: false,
-	boardSize: { rows: 10, columns: 10 },
-	mines: { total: 10, discovered: 0 },
+	boardSize: { rows: 15, columns: 15 },
+	mines: { total: 30, discovered: 0 },
 	board: [],
 	setMines: (mines) => set({ mines }),
 	setBoard: (board) => set({ board }),
