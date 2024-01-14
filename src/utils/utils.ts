@@ -1,4 +1,4 @@
-import { Cell, BoardSize } from '@/Types/types'
+import { Cell, BoardSize } from '@/types/types'
 
 function randomUniquePos(board: Cell[][]) {
 	while (true) {

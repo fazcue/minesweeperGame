@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import { BoardSize, Mines, Cell } from '@/Types/types'
-import { generateBoard } from '@/Utils/utils'
+import { BoardSize, Mines, Cell } from '@/types/types'
+import { generateBoard } from '@/utils/utils'
 
 interface IStore {
 	playing: boolean
