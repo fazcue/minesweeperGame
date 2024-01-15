@@ -8,6 +8,7 @@ interface IStore {
 	mines: Mines
 	board: Cell[][]
 	togglePlaying: () => void
+	setBoardSize: (boardSize: BoardSize) => void
 	setMines: (mines: Mines) => void
 	setBoard: (board: Cell[][]) => void
 	generateNewBoard: () => void
@@ -19,6 +20,7 @@ const useStore = create<IStore>((set, get) => ({
 	boardSize: { rows: 15, columns: 15 },
 	mines: { total: 30, discovered: 0 },
 	board: [],
+	setBoardSize: (boardSize) => set({ boardSize }),
 	setMines: (mines) => set({ mines }),
 	setBoard: (board) => set({ board }),
 	generateNewBoard: () =>

@@ -1,0 +1,39 @@
+.sizeButton {
+    width: 80px;
+    height: 40px;
+    margin: 2px;
+    cursor: pointer;
+    border: 0px;
+    border-radius: 3px;
+    transition: 0.2s;
+    scale: 0.9;
+}
+
+.sizeButton:hover {
+    background-color:crimson;
+    color: white;
+    scale: 1.0;
+}
+
+.selected {
+    background-color:crimson;
+    color: white;
+    scale: 1;
+}
+
+.playButton {
+    width: 120px;
+    height: 60px;
+    margin: 15px;
+    cursor: pointer;
+    border: 0px;
+    border-radius: 3px;
+    transition: 0.2s;
+    scale: 0.9;
+}
+
+.playButton:hover {
+    background-color:darkcyan;
+    color: white;
+    scale: 1.0;
+}
