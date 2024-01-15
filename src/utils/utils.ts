@@ -1,4 +1,4 @@
-import { Cell, BoardSize } from '@/types/types'
+import { Cell, BoardSize, Icons } from '@/types/types'
 
 function randomUniquePos(board: Cell[][]) {
 	while (true) {
@@ -92,4 +92,8 @@ export function revealNulls(board: Cell[][], i: number, j: number) {
 			}
 		}
 	}
+}
+
+export function randomIcons(icons: Icons[]) {
+	return icons[Math.floor(Math.random() * icons.length)]
 }

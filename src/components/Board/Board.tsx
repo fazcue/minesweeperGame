@@ -7,7 +7,9 @@ import { wonModal } from '@/utils/alerts'
 import styles from './Board.module.css'
 
 export default function Board(): JSX.Element {
-	const { boardSize, mines, board, resetGame } = useStore((state) => state)
+	const { boardSize, mines, board, resetGame, togglePlaying } = useStore(
+		(state) => state
+	)
 
 	const hasWon = () => {
 		const toReveal = boardSize.rows * boardSize.columns - mines.total // 15
@@ -31,7 +33,7 @@ export default function Board(): JSX.Element {
 			{hasWon() && (
 				<>
 					<Confetti />
-					{wonModal(resetGame)}
+					{wonModal({ resetGame, togglePlaying })}
 				</>
 			)}
 		</>

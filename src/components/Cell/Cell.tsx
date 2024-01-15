@@ -13,9 +13,8 @@ export default function Cell({ cell }: Props): JSX.Element {
 	const { value, revealed, isMine, isPossibleMine, position } = cell
 	const { row: i, column: j } = position
 
-	const { board, setBoard, setMines, resetGame, mines } = useStore(
-		(state) => state
-	)
+	const { board, setBoard, setMines, resetGame, togglePlaying, mines } =
+		useStore((state) => state)
 
 	const onClick = (): void => {
 		const newBoard = [...board]
@@ -27,7 +26,7 @@ export default function Cell({ cell }: Props): JSX.Element {
 
 		// if it's a mine, game over
 		if (newBoard[i][j].value === '*') {
-			lostModal(resetGame)
+			lostModal({ resetGame, togglePlaying })
 			return
 		}
 

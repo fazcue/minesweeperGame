@@ -16,3 +16,8 @@ export type Mines = {
 	total: number
 	discovered: number
 }
+
+export type Icons = {
+	icon: string
+	message: string
+}
