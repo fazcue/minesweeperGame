@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { BoardSize, Mines, Cell } from '@/types/types'
 import { generateBoard } from '@/utils/utils'
+import { INITIAL_MINES } from '@/config/config'
 
 interface IStore {
 	playing: boolean
@@ -18,9 +19,10 @@ interface IStore {
 const useStore = create<IStore>((set, get) => ({
 	playing: false,
 	boardSize: { rows: 15, columns: 15 },
-	mines: { total: 30, discovered: 0 },
+	mines: { total: INITIAL_MINES, discovered: 0 },
 	board: [],
-	setBoardSize: (boardSize) => set({ boardSize }),
+	setBoardSize: (boardSize) =>
+		set({ boardSize, mines: { ...get().mines, total: INITIAL_MINES } }),
 	setMines: (mines) => set({ mines }),
 	setBoard: (board) => set({ board }),
 	generateNewBoard: () =>
