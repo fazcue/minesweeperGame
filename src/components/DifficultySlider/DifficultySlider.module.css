@@ -1,0 +1,8 @@
+.slider {
+    width: 200px;
+}
+
+.slider::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, white, crimson);
+    border-radius: 10px;
+}
