@@ -1,5 +1,5 @@
 import useStore from '@/store/store'
-import { sizes } from '@/config/config'
+import { SIZES } from '@/config/config'
 import styles from './SizeSelector.module.css'
 
 export default function SizeSelector() {
@@ -10,7 +10,7 @@ export default function SizeSelector() {
 	}
 
 	const Sizes = (): JSX.Element[] => {
-		return sizes.map(({ rows, columns }) => (
+		return SIZES.map(({ rows, columns }) => (
 			<button
 				key={`${rows}-${columns}`}
 				onClick={() => changeBoardSize(rows, columns)}
@@ -25,7 +25,7 @@ export default function SizeSelector() {
 
 	return (
 		<>
-			<h2>Select size</h2>
+			<h2>size</h2>
 			<div>
 				<Sizes />
 			</div>
