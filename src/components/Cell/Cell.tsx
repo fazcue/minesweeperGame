@@ -10,52 +10,54 @@ interface Props {
 }
 
 export default function Cell({ cell }: Props): JSX.Element {
-	const { value, revealed, isMine, isPossibleMine, position } = cell
-	const { row: i, column: j } = position
+	const { id, value, revealed, isMine, isPossibleMine, position } = cell
+	const { row, column } = position
 
 	const { board, setBoard, setMines, resetGame, togglePlaying, mines } =
 		useStore((state) => state)
 
 	const onClick = (): void => {
-		const newBoard = [...board]
-
 		// if it's marked as possible mine, don't do anything
-		if (newBoard[i][j].isPossibleMine || newBoard[i][j].isMine) {
+		if (isPossibleMine || isMine) {
 			return
 		}
 
 		// if it's a mine, game over
-		if (newBoard[i][j].value === '*') {
+		if (value === '*') {
 			lostModal({ resetGame, togglePlaying })
 			return
 		}
 
-		newBoard[i][j].revealed = true
+		const newBoard = [...board]
 
-		// it it's a zero, reveal all surrounding cells
-		if (!newBoard[i][j].value) {
-			revealNulls(newBoard, i, j)
+		cell.revealed = true
+		newBoard[row][column].revealed = cell.revealed
+
+		// it it's null, reveal all surrounding cells
+		if (!value) {
+			revealNulls(newBoard, row, column)
 		}
 
 		setBoard(newBoard)
 	}
 
-	const toggleMine = (e: MouseEvent<HTMLButtonElement>) => {
+	const onContextMenu = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
 
-		if (!board[i][j].revealed) {
-			const newBoard = [...board]
-
-			if (newBoard[i][j].isMine) {
-				newBoard[i][j].isMine = !newBoard[i][j].isMine
-				newBoard[i][j].isPossibleMine = !newBoard[i][j].isPossibleMine
-			} else if (newBoard[i][j].isPossibleMine) {
-				newBoard[i][j].isPossibleMine = !newBoard[i][j].isPossibleMine
+		if (!revealed) {
+			if (isMine) {
+				cell.isMine = false
+				cell.isPossibleMine = true
+			} else if (isPossibleMine) {
+				cell.isPossibleMine = false
 				setMines({ ...mines, discovered: mines.discovered - 1 })
 			} else {
-				newBoard[i][j].isMine = !newBoard[i][j].isMine
+				cell.isMine = true
 				setMines({ ...mines, discovered: mines.discovered + 1 })
 			}
+
+			const newBoard = [...board]
+			newBoard[row][column] = cell
 
 			setBoard(newBoard)
 		}
@@ -63,7 +65,7 @@ export default function Cell({ cell }: Props): JSX.Element {
 
 	return (
 		<button
-			key={cell.id}
+			key={id}
 			className={`${styles.cell} ${
 				revealed && value ? styles['num' + value] : ''
 			} ${isMine ? styles.mine : ''} ${
@@ -71,7 +73,7 @@ export default function Cell({ cell }: Props): JSX.Element {
 			}`}
 			onClick={onClick}
 			onContextMenu={(e) => {
-				toggleMine(e)
+				onContextMenu(e)
 			}}
 			disabled={revealed}
 			id={cell.id}
