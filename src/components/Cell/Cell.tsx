@@ -2,7 +2,7 @@ import { MouseEvent } from 'react'
 import { Cell } from '@/types/types'
 import useStore from '@/store/store'
 import { lostModal } from '@/utils/alerts'
-import { revealNulls } from '@/utils/utils'
+import { revealNulls } from '@/utils/boards'
 import styles from './Cell.module.css'
 
 interface Props {

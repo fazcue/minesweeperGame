@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { BoardSize, Mines, Cell } from '@/types/types'
-import { generateBoard } from '@/utils/utils'
+import { generateBoard } from '@/utils/boards'
 import { INITIAL_MINES } from '@/config/config'
 
 interface IStore {

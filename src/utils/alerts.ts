@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2'
 import { LOSTGAME_ICONS } from '@/config/config'
-import { randomIcons } from './utils'
+import { randomIcons } from './icons'
 
 interface WonLostModal {
 	resetGame: () => void
