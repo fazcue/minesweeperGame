@@ -1,6 +1,7 @@
 import { MouseEvent } from 'react'
 import { Cell } from '@/types/types'
 import useStore from '@/store/store'
+import useOptions from '@/store/options'
 import { lostModal } from '@/utils/alerts'
 import { revealNulls, revealNotMines } from '@/utils/boards'
 import styles from './Cell.module.css'
@@ -14,7 +15,8 @@ export default function Cell({ cell }: Props): JSX.Element {
 	const { row, column } = position
 
 	const { board, setBoard, setMines, resetGame, togglePlaying, mines } =
-		useStore((state) => state)
+		useStore()
+	const { allowMineMarker } = useOptions()
 
 	const onClick = (): void => {
 		if (!revealed) {
@@ -46,7 +48,7 @@ export default function Cell({ cell }: Props): JSX.Element {
 	const onContextMenu = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
 
-		if (!revealed) {
+		if (allowMineMarker && !revealed) {
 			if (isMine) {
 				cell.isMine = false
 				cell.isPossibleMine = true
@@ -66,12 +68,12 @@ export default function Cell({ cell }: Props): JSX.Element {
 	}
 
 	const onDoubleClick = () => {
-		// reveal all touching cells that are not mines
-		const newBoard = [...board]
+		if (allowMineMarker) {
+			const newBoard = [...board]
 
-		revealNotMines(board, cell, resetGame, togglePlaying)
-
-		setBoard(newBoard)
+			revealNotMines(board, cell, resetGame, togglePlaying)
+			setBoard(newBoard)
+		}
 	}
 
 	return (
