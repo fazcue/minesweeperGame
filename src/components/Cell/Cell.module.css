@@ -4,22 +4,22 @@
     align-items: center;
     width: 35px;
     height: 35px;
-    background-color: darkgray;
+    background-color:gray;
     margin: 2px;
     cursor: pointer;
     border: 0;
     font-size: 22px;
-    color: #333;
     opacity: 1;
+    transition: 0.05s ease-in-out;
 }
 
 .cell:disabled {
-    cursor:crosshair;
-    background-color: lightgray;
+    cursor:default;
+    background-color: #111;
 }
 
 .cell:hover:not(:disabled) {
-    opacity: 0.8;
+    opacity: 0.4;
 }
 
 .num1 {
@@ -52,6 +52,28 @@
 
 .num8 {
     color: gray;
+}
+
+.num1,
+.num2,
+.num3,
+.num4,
+.num5,
+.num6,
+.num7,
+.num8 {
+    background-color: lightgray;
+}
+
+.num1:hover,
+.num2:hover,
+.num3:hover,
+.num4:hover,
+.num5:hover,
+.num6:hover,
+.num7:hover,
+.num8:hover {
+    opacity: 1 !important;
 }
 
 .mine {
