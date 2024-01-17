@@ -2,7 +2,7 @@ import { MouseEvent } from 'react'
 import { Cell } from '@/types/types'
 import useStore from '@/store/store'
 import { lostModal } from '@/utils/alerts'
-import { revealNulls } from '@/utils/boards'
+import { revealNulls, revealNotMines } from '@/utils/boards'
 import styles from './Cell.module.css'
 
 interface Props {
@@ -17,28 +17,30 @@ export default function Cell({ cell }: Props): JSX.Element {
 		useStore((state) => state)
 
 	const onClick = (): void => {
-		// if it's marked as possible mine, don't do anything
-		if (isPossibleMine || isMine) {
-			return
+		if (!revealed) {
+			// if it's marked as possible mine, don't do anything
+			if (isPossibleMine || isMine) {
+				return
+			}
+
+			// if it's a mine, game over
+			if (value === '*') {
+				lostModal({ resetGame, togglePlaying })
+				return
+			}
+
+			const newBoard = [...board]
+
+			cell.revealed = true
+			newBoard[row][column].revealed = cell.revealed
+
+			// it it's null, reveal all surrounding cells
+			if (!value) {
+				revealNulls(newBoard, row, column)
+			}
+
+			setBoard(newBoard)
 		}
-
-		// if it's a mine, game over
-		if (value === '*') {
-			lostModal({ resetGame, togglePlaying })
-			return
-		}
-
-		const newBoard = [...board]
-
-		cell.revealed = true
-		newBoard[row][column].revealed = cell.revealed
-
-		// it it's null, reveal all surrounding cells
-		if (!value) {
-			revealNulls(newBoard, row, column)
-		}
-
-		setBoard(newBoard)
 	}
 
 	const onContextMenu = (e: MouseEvent<HTMLButtonElement>) => {
@@ -63,6 +65,15 @@ export default function Cell({ cell }: Props): JSX.Element {
 		}
 	}
 
+	const onDoubleClick = () => {
+		// reveal all touching cells that are not mines
+		const newBoard = [...board]
+
+		revealNotMines(board, cell, resetGame, togglePlaying)
+
+		setBoard(newBoard)
+	}
+
 	return (
 		<button
 			key={id}
@@ -72,10 +83,9 @@ export default function Cell({ cell }: Props): JSX.Element {
 				isPossibleMine ? styles.possibleMine : ''
 			}`}
 			onClick={onClick}
-			onContextMenu={(e) => {
-				onContextMenu(e)
-			}}
-			disabled={revealed}
+			onContextMenu={onContextMenu}
+			onDoubleClick={onDoubleClick}
+			disabled={revealed && !value}
 			id={cell.id}
 		>
 			{revealed ? value : isMine || isPossibleMine ? '💣' : null}

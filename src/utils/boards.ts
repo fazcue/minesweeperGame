@@ -1,46 +1,44 @@
 import { Cell, BoardSize } from '@/types/types'
+import { lostModal } from './alerts'
 
-function generateBoard(boardSize: BoardSize, mines: number) {
-	const { rows, columns } = boardSize
-
-	// create empty board
-	let board: Cell[][] = newEmptyBoard(rows, columns)
-
-	// add random mines
-	addRandomMines(board, mines)
-
-	// add numbers
-	addNumbers(board, rows, columns)
-
-	return board
+function touchingCells(row: number, column: number): [number, number][] {
+	return [
+		[row - 1, column - 1],
+		[row - 1, column],
+		[row - 1, column + 1],
+		[row, column - 1],
+		[row, column + 1],
+		[row + 1, column - 1],
+		[row + 1, column],
+		[row + 1, column + 1],
+	]
 }
 
-function revealNulls(board: Cell[][], i: number, j: number) {
-	for (let x = i - 1; x <= i + 1; x++) {
-		for (let y = j - 1; y <= j + 1; y++) {
-			if (x >= 0 && x < board.length && y >= 0 && y < board[0].length) {
-				if (!board[x][y].revealed) {
-					board[x][y].revealed = true
-					if (board[x][y].value === null) {
-						revealNulls(board, x, y)
-					}
-				}
-			}
-		}
-	}
+function isValidPosition(
+	board: Cell[][],
+	row: number,
+	column: number
+): boolean {
+	return (
+		row >= 0 &&
+		row < board.length &&
+		column >= 0 &&
+		column < board[0].length
+	)
 }
 
-function randomUniquePos(board: Cell[][]) {
+function randomUniquePos(board: Cell[][]): [number, number] {
 	while (true) {
 		let randomRow = Math.floor(Math.random() * board.length)
 		let randomCol = Math.floor(Math.random() * board[0].length)
 
-		if (board[randomRow][randomCol].value !== '*')
+		if (board[randomRow][randomCol].value !== '*') {
 			return [randomRow, randomCol]
+		}
 	}
 }
 
-function newEmptyBoard(rows: number, columns: number) {
+function newEmptyBoard(rows: number, columns: number): Cell[][] {
 	const board: Cell[][] = []
 
 	for (let i = 0; i < rows; i++) {
@@ -61,41 +59,30 @@ function newEmptyBoard(rows: number, columns: number) {
 	return board
 }
 
-function addRandomMines(board: Cell[][], mines: number) {
+function addRandomMines(board: Cell[][], mines: number): void {
 	for (let i = 0; i < mines; i++) {
 		const [row, column] = randomUniquePos(board)
 		board[row][column] = { ...board[row][column], value: '*' }
 	}
 }
 
-function addNumbers(board: Cell[][], rows: number, columns: number) {
-	for (let i = 0; i < rows; i++) {
-		for (let j = 0; j < columns; j++) {
+function addNumbers(board: Cell[][]) {
+	for (let i = 0; i < board.length; i++) {
+		for (let j = 0; j < board[0].length; j++) {
+			const { value } = board[i][j]
+
 			//if it is not a mine, count touching mines
-			if (!board[i][j].value) {
+			if (!value) {
 				let count = 0
 
-				const touching = [
-					[i - 1, j - 1],
-					[i - 1, j],
-					[i - 1, j + 1],
-					[i, j - 1],
-					[i, j + 1],
-					[i + 1, j - 1],
-					[i + 1, j],
-					[i + 1, j + 1],
-				]
+				const touching = touchingCells(i, j)
 
 				for (let [k, l] of touching) {
 					if (
-						k >= 0 &&
-						l >= 0 &&
-						k < board.length &&
-						l < board[0].length
+						isValidPosition(board, k, l) &&
+						board[k][l].value === '*'
 					) {
-						if (board[k][l].value === '*') {
-							count++
-						}
+						count++
 					}
 				}
 
@@ -108,4 +95,97 @@ function addNumbers(board: Cell[][], rows: number, columns: number) {
 	}
 }
 
-export { generateBoard, revealNulls }
+function generateBoard(boardSize: BoardSize, mines: number): Cell[][] {
+	const { rows, columns } = boardSize
+
+	const board: Cell[][] = newEmptyBoard(rows, columns)
+
+	addRandomMines(board, mines)
+	addNumbers(board)
+
+	return board
+}
+
+function revealNulls(board: Cell[][], row: number, column: number): void {
+	const touching = touchingCells(row, column)
+
+	for (let [i, j] of touching) {
+		if (isValidPosition(board, i, j) && !board[i][j].revealed) {
+			board[i][j].revealed = true
+
+			if (!board[i][j].value) {
+				revealNulls(board, i, j)
+			}
+		}
+	}
+}
+
+function revealNotMines(
+	board: Cell[][],
+	cell: Cell,
+	resetGame: () => void,
+	togglePlaying: () => void
+) {
+	const { value, position } = cell
+	const { row, column } = position
+
+	// count touching cells marked as possible mine
+	let count = 0
+
+	const touching = touchingCells(row, column)
+
+	touching.forEach(([row, column]) => {
+		if (
+			isValidPosition(board, row, column) &&
+			(board[row][column].isPossibleMine || board[row][column].isMine)
+		) {
+			count++
+		}
+	})
+
+	// if it's not the right number, don't reveal
+	if (count !== value) {
+		return
+	}
+
+	touching.every(([row, column]) => {
+		if (isValidPosition(board, row, column)) {
+			const { isMine, isPossibleMine, value, revealed } =
+				board[row][column]
+
+			// if it's mark as a possible mine, don't reveal it
+			if (isMine || isPossibleMine) {
+				return true
+			}
+
+			// it it's a mine, game over
+			if (value === '*') {
+				lostModal({ resetGame, togglePlaying })
+				return false
+			}
+
+			if (!revealed) {
+				board[row][column].revealed = true
+
+				// it it's null, reveal all surrounding cells
+				if (!value) {
+					revealNulls(board, row, column)
+				}
+
+				revealNotMines(
+					board,
+					board[row][column],
+					resetGame,
+					togglePlaying
+				)
+				return true
+			}
+
+			return true
+		}
+
+		return true
+	})
+}
+
+export { generateBoard, revealNulls, revealNotMines }
