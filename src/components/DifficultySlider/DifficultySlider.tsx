@@ -10,7 +10,7 @@ export default function DifficultySlider() {
 
 	return (
 		<>
-			<h2>difficulty</h2>
+			<p>difficulty</p>
 			<input
 				type="range"
 				min="1"

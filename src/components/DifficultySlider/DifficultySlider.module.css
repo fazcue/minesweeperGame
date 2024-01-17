@@ -6,3 +6,7 @@
     background: linear-gradient(to right, white, crimson);
     border-radius: 10px;
 }
+
+.slider::-webkit-slider-thumb {
+    cursor: pointer;
+}

@@ -25,7 +25,7 @@ export default function SizeSelector() {
 
 	return (
 		<>
-			<h2>size</h2>
+			<p>size</p>
 			<div>
 				<Sizes />
 			</div>
