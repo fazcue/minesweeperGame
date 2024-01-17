@@ -1,16 +1,17 @@
 .playButton {
-    width: 120px;
-    height: 60px;
+    width: 140px;
+    height: 70px;
     margin: 15px;
     cursor: pointer;
     border: 0px;
     border-radius: 3px;
     transition: 0.2s;
     scale: 0.9;
+    font-size: 22px;
 }
 
 .playButton:hover {
-    background-color:darkcyan;
+    background-color:crimson;
     color: white;
     scale: 1.0;
 }
