@@ -5,6 +5,7 @@ import Cell from '../Cell/Cell'
 import Confetti from 'react-confetti'
 import { wonModal } from '@/utils/alerts'
 import styles from './Board.module.css'
+import Helpers from '../Helpers/Helpers'
 
 export default function Board(): JSX.Element {
 	const { boardSize, mines, board, resetGame, togglePlaying } = useStore(
@@ -30,6 +31,7 @@ export default function Board(): JSX.Element {
 					))}
 				</div>
 			))}
+			<Helpers />
 			{hasWon() && (
 				<>
 					<Confetti />
