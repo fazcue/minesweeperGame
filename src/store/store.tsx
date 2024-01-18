@@ -14,6 +14,8 @@ interface IStore {
 	setBoard: (board: Cell[][]) => void
 	generateNewBoard: () => void
 	resetGame: () => void
+	loupe: boolean
+	setLoupe: (loupe: boolean) => void
 }
 
 const useStore = create<IStore>((set, get) => ({
@@ -32,7 +34,10 @@ const useStore = create<IStore>((set, get) => ({
 		get().generateNewBoard()
 		set({ playing: true, mines: { ...get().mines, discovered: 0 } })
 		set({ mines: { ...get().mines, discovered: 0 } })
+		set({ loupe: false })
 	},
+	loupe: false,
+	setLoupe: (loupe) => set({ loupe }),
 }))
 
 export default useStore

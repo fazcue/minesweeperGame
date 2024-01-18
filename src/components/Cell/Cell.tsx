@@ -14,12 +14,36 @@ export default function Cell({ cell }: Props): JSX.Element {
 	const { id, value, revealed, isMine, isPossibleMine, position } = cell
 	const { row, column } = position
 
-	const { board, setBoard, setMines, resetGame, togglePlaying, mines } =
-		useStore()
+	const {
+		board,
+		setBoard,
+		setMines,
+		resetGame,
+		togglePlaying,
+		mines,
+		loupe,
+	} = useStore()
 	const { allowMineMarker } = useOptions()
 
 	const onClick = (): void => {
 		if (!revealed) {
+			// if loupe is active, reveal without possible of loosing
+			if (loupe && !isMine && !isPossibleMine) {
+				const newBoard = [...board]
+
+				if (value === '*') {
+					cell.isMine = true
+					setMines({ ...mines, discovered: mines.discovered + 1 })
+				} else {
+					cell.revealed = true
+				}
+
+				newBoard[row][column].revealed = cell.revealed
+
+				setBoard(newBoard)
+				return
+			}
+
 			// if it's marked as possible mine, don't do anything
 			if (isPossibleMine || isMine) {
 				return
