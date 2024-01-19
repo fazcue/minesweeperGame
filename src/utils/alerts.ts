@@ -4,10 +4,10 @@ import { randomIcons } from './icons'
 
 interface WonLostModal {
 	resetGame: () => void
-	togglePlaying: () => void
+	changeSettings: () => void
 }
 
-const wonModal = ({ resetGame, togglePlaying }: WonLostModal) => {
+const wonModal = ({ resetGame, changeSettings }: WonLostModal) => {
 	Swal.fire({
 		title: '<div><span style="font-size: 64px">😏</span><h2>Congrats! You won</h2></div>',
 		confirmButtonText: 'Play again',
@@ -18,12 +18,12 @@ const wonModal = ({ resetGame, togglePlaying }: WonLostModal) => {
 			resetGame()
 		}
 		if (result.isDenied) {
-			togglePlaying()
+			changeSettings()
 		}
 	})
 }
 
-const lostModal = ({ resetGame, togglePlaying }: WonLostModal) => {
+const lostModal = ({ resetGame, changeSettings }: WonLostModal) => {
 	const icon = randomIcons(LOSTGAME_ICONS)
 
 	Swal.fire({
@@ -41,7 +41,7 @@ const lostModal = ({ resetGame, togglePlaying }: WonLostModal) => {
 			resetGame()
 		}
 		if (result.isDenied) {
-			togglePlaying()
+			changeSettings()
 		}
 	})
 }

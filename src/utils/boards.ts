@@ -113,6 +113,14 @@ function revealNulls(board: Cell[][], row: number, column: number): void {
 		if (isValidPosition(board, i, j) && !board[i][j].revealed) {
 			board[i][j].revealed = true
 
+			if (board[i][j].isMine) {
+				board[i][j].isMine = false
+			}
+
+			if (board[i][j].isPossibleMine) {
+				board[i][j].isPossibleMine = false
+			}
+
 			if (!board[i][j].value) {
 				revealNulls(board, i, j)
 			}
@@ -124,7 +132,7 @@ function revealNotMines(
 	board: Cell[][],
 	cell: Cell,
 	resetGame: () => void,
-	togglePlaying: () => void
+	changeSettings: () => void
 ) {
 	const { value, position } = cell
 	const { row, column } = position
@@ -160,7 +168,7 @@ function revealNotMines(
 
 			// it it's a mine, game over
 			if (value === '*') {
-				lostModal({ resetGame, togglePlaying })
+				lostModal({ resetGame, changeSettings })
 				return false
 			}
 
@@ -176,7 +184,7 @@ function revealNotMines(
 					board,
 					board[row][column],
 					resetGame,
-					togglePlaying
+					changeSettings
 				)
 				return true
 			}

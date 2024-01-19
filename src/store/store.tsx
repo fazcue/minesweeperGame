@@ -14,6 +14,7 @@ interface IStore {
 	setBoard: (board: Cell[][]) => void
 	generateNewBoard: () => void
 	resetGame: () => void
+	changeSettings: () => void
 	loupe: boolean
 	setLoupe: (loupe: boolean) => void
 }
@@ -36,6 +37,7 @@ const useStore = create<IStore>((set, get) => ({
 		set({ mines: { ...get().mines, discovered: 0 } })
 		set({ loupe: false })
 	},
+	changeSettings: () => set({ playing: false, loupe: false }),
 	loupe: false,
 	setLoupe: (loupe) => set({ loupe }),
 }))

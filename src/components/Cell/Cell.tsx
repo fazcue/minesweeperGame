@@ -19,7 +19,7 @@ export default function Cell({ cell }: Props): JSX.Element {
 		setBoard,
 		setMines,
 		resetGame,
-		togglePlaying,
+		changeSettings,
 		mines,
 		loupe,
 	} = useStore()
@@ -51,7 +51,7 @@ export default function Cell({ cell }: Props): JSX.Element {
 
 			// if it's a mine, game over
 			if (value === '*') {
-				lostModal({ resetGame, togglePlaying })
+				lostModal({ resetGame, changeSettings })
 				return
 			}
 
@@ -95,7 +95,7 @@ export default function Cell({ cell }: Props): JSX.Element {
 		if (allowMineMarker) {
 			const newBoard = [...board]
 
-			revealNotMines(board, cell, resetGame, togglePlaying)
+			revealNotMines(board, cell, resetGame, changeSettings)
 			setBoard(newBoard)
 		}
 	}
