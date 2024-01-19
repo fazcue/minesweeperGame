@@ -8,7 +8,7 @@ import styles from './Board.module.css'
 import Helpers from '../Helpers/Helpers'
 
 export default function Board(): JSX.Element {
-	const { boardSize, mines, board, resetGame, togglePlaying } = useStore(
+	const { boardSize, mines, board, resetGame, changeSettings } = useStore(
 		(state) => state
 	)
 
@@ -35,7 +35,7 @@ export default function Board(): JSX.Element {
 			{hasWon() && (
 				<>
 					<Confetti />
-					{wonModal({ resetGame, togglePlaying })}
+					{wonModal({ resetGame, changeSettings })}
 				</>
 			)}
 		</>
