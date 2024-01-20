@@ -1,6 +1,6 @@
 import useOptions from '@/store/options'
-import styles from './LoupeToggler.module.css'
 import useStore from '@/store/store'
+import Switch from '../Switch/Switch'
 
 export default function LoupeToggler() {
 	const { allowLoupe, setAllowLoupe } = useOptions()
@@ -14,14 +14,7 @@ export default function LoupeToggler() {
 	return (
 		<>
 			<p>loupe</p>
-			<label className={styles.switch}>
-				<input
-					type="checkbox"
-					onChange={onChange}
-					checked={allowLoupe}
-				/>
-				<span className={`${styles.slider} ${styles.round}`}></span>
-			</label>
+			<Switch onChange={onChange} checked={allowLoupe} />
 		</>
 	)
 }

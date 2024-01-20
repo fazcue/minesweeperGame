@@ -1,5 +1,5 @@
 import useOptions from '@/store/options'
-import styles from './MineMarkerToggler.module.css'
+import Switch from '../Switch/Switch'
 
 export default function MineMarkerToggler() {
 	const { allowMineMarker, setAllowMineMarker } = useOptions()
@@ -11,14 +11,7 @@ export default function MineMarkerToggler() {
 	return (
 		<>
 			<p>mine marker</p>
-			<label className={styles.switch}>
-				<input
-					type="checkbox"
-					onChange={onChange}
-					checked={allowMineMarker}
-				/>
-				<span className={`${styles.slider} ${styles.round}`}></span>
-			</label>
+			<Switch onChange={onChange} checked={allowMineMarker} />
 		</>
 	)
 }
