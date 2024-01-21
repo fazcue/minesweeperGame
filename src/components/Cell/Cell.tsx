@@ -1,8 +1,7 @@
 import { MouseEvent } from 'react'
 import { Cell } from '@/types/types'
 import useStore from '@/store/store'
-import useOptions from '@/store/options'
-import { lostModal } from '@/utils/alerts'
+import { lostModal, wonModal } from '@/utils/alerts'
 import { revealNulls, revealNotMines } from '@/utils/boards'
 import styles from './Cell.module.css'
 
@@ -16,16 +15,46 @@ export default function Cell({ cell }: Props): JSX.Element {
 
 	const {
 		board,
+		boardSize,
 		setBoard,
 		setMines,
 		resetGame,
-		changeSettings,
+		resetSettings,
 		mines,
 		loupe,
+		allowMineMarker,
+		timer,
+		toggleTimer,
+		resetTimer,
+		setWinner,
 	} = useStore()
-	const { allowMineMarker } = useOptions()
+
+	const reset = () => {
+		resetGame()
+		resetTimer()
+		setWinner(false)
+	}
+
+	const changeSettings = () => {
+		resetSettings()
+		resetTimer()
+		setWinner(false)
+	}
+
+	const hasWon = (board: Cell[][]) => {
+		const toReveal = boardSize.rows * boardSize.columns - mines.total
+		const totalRevealed = board
+			.flat()
+			.reduce((acc, cell) => acc + (cell.revealed ? 1 : 0), 0)
+
+		return totalRevealed === toReveal
+	}
 
 	const onClick = (): void => {
+		if (!timer) {
+			toggleTimer()
+		}
+
 		if (!revealed) {
 			// if loupe is active, reveal without possible of loosing
 			if (loupe && !isMine && !isPossibleMine) {
@@ -41,6 +70,13 @@ export default function Cell({ cell }: Props): JSX.Element {
 				newBoard[row][column].revealed = cell.revealed
 
 				setBoard(newBoard)
+
+				if (hasWon(newBoard)) {
+					wonModal({ reset, changeSettings })
+					toggleTimer()
+					setWinner(true)
+				}
+
 				return
 			}
 
@@ -51,7 +87,8 @@ export default function Cell({ cell }: Props): JSX.Element {
 
 			// if it's a mine, game over
 			if (value === '*') {
-				lostModal({ resetGame, changeSettings })
+				lostModal({ reset, changeSettings })
+				toggleTimer()
 				return
 			}
 
@@ -66,6 +103,12 @@ export default function Cell({ cell }: Props): JSX.Element {
 			}
 
 			setBoard(newBoard)
+
+			if (hasWon(newBoard)) {
+				wonModal({ reset, changeSettings })
+				toggleTimer()
+				setWinner(true)
+			}
 		}
 	}
 
