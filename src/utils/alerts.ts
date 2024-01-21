@@ -3,11 +3,11 @@ import { LOSTGAME_ICONS } from '@/config/config'
 import { randomIcons } from './icons'
 
 interface WonLostModal {
-	resetGame: () => void
+	reset: () => void
 	changeSettings: () => void
 }
 
-const wonModal = ({ resetGame, changeSettings }: WonLostModal) => {
+const wonModal = ({ reset, changeSettings }: WonLostModal) => {
 	Swal.fire({
 		title: '<div><span style="font-size: 64px">😏</span><h2>Congrats! You won</h2></div>',
 		confirmButtonText: 'Play again',
@@ -15,7 +15,7 @@ const wonModal = ({ resetGame, changeSettings }: WonLostModal) => {
 		showDenyButton: true,
 	}).then((result) => {
 		if (result.isConfirmed) {
-			resetGame()
+			reset()
 		}
 		if (result.isDenied) {
 			changeSettings()
@@ -23,7 +23,7 @@ const wonModal = ({ resetGame, changeSettings }: WonLostModal) => {
 	})
 }
 
-const lostModal = ({ resetGame, changeSettings }: WonLostModal) => {
+const lostModal = ({ reset, changeSettings }: WonLostModal) => {
 	const icon = randomIcons(LOSTGAME_ICONS)
 
 	Swal.fire({
@@ -38,7 +38,7 @@ const lostModal = ({ resetGame, changeSettings }: WonLostModal) => {
 		showDenyButton: true,
 	}).then((result) => {
 		if (result.isConfirmed) {
-			resetGame()
+			reset()
 		}
 		if (result.isDenied) {
 			changeSettings()
