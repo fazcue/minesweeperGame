@@ -1,7 +1,7 @@
 import useStore from '@/store/store'
 import Switch from '../Switch/Switch'
 
-export default function MineMarkerToggler() {
+export default function MineMarkerToggler(): React.JSX.Element {
 	const { allowMineMarker, setAllowMineMarker } = useStore()
 
 	const onChange = () => {

@@ -7,7 +7,7 @@ import styles from './Board.module.css'
 import Helpers from '../Helpers/Helpers'
 import Timer from '../Timer/Timer'
 
-export default function Board(): JSX.Element {
+export default function Board(): React.JSX.Element {
 	const { mines, board, winner } = useStore()
 
 	return (

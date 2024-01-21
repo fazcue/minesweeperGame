@@ -6,7 +6,7 @@ import EmptySpace from '../EmptySpace/EmptySpace'
 import MineMarkerToggler from '../MineMarkerToggler/MineMarkerToggler'
 import LoupeToggler from '../LoupeToggler/LoupeToggler'
 
-export default function Options() {
+export default function Options(): React.JSX.Element {
 	const { togglePlaying, generateNewBoard } = useStore()
 
 	const startGame = () => {

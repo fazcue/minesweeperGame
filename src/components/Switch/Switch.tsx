@@ -5,7 +5,10 @@ interface Props {
 	checked: boolean
 }
 
-export default function Switch({ onChange, checked }: Props): JSX.Element {
+export default function Switch({
+	onChange,
+	checked,
+}: Props): React.JSX.Element {
 	return (
 		<label className={styles.switch}>
 			<input type="checkbox" onChange={onChange} checked={checked} />

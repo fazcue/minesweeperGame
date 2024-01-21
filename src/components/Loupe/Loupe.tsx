@@ -2,7 +2,7 @@ import useStore from '@/store/store'
 import styles from './Loupe.module.css'
 import Switch from '../Switch/Switch'
 
-export default function Loupe() {
+export default function Loupe(): React.JSX.Element {
 	const { loupe, setLoupe } = useStore()
 
 	const onChange = () => {

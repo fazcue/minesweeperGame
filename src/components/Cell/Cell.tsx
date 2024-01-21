@@ -9,7 +9,7 @@ interface Props {
 	cell: CellBox
 }
 
-export default function Cell({ cell }: Props): JSX.Element {
+export default function Cell({ cell }: Props): React.JSX.Element {
 	const { id, value, revealed, isMine, isPossibleMine, position } = cell
 	const { row, column } = position
 

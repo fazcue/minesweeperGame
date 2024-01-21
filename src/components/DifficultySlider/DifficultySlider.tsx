@@ -1,7 +1,7 @@
 import styles from './DifficultySlider.module.css'
 import useStore from '@/store/store'
 
-export default function DifficultySlider() {
+export default function DifficultySlider(): React.JSX.Element {
 	const { boardSize, setMines, mines } = useStore()
 
 	const changeSlider = (e: React.ChangeEvent<HTMLInputElement>) => {
