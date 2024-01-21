@@ -1,4 +1,4 @@
-export type Cell = {
+export type CellBox = {
 	id: string
 	position: { row: number; column: number }
 	value: number | '*' | null

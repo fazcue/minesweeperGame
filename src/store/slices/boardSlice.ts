@@ -1,13 +1,13 @@
 import { StateCreator } from 'zustand'
-import { BoardSize, Cell, Mines } from '@/types/types'
+import { BoardSize, CellBox, Mines } from '@/types/types'
 import { INITIAL_MINES } from '@/config/config'
 import { generateBoard } from '@/utils/boards'
 
 export interface BoardSlice {
 	boardSize: BoardSize
 	setBoardSize: (boardSize: BoardSize) => void
-	board: Cell[][]
-	setBoard: (board: Cell[][]) => void
+	board: CellBox[][]
+	setBoard: (board: CellBox[][]) => void
 	mines: Mines
 	setMines: (mines: Mines) => void
 	generateNewBoard: () => void

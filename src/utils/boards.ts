@@ -1,4 +1,4 @@
-import { Cell, BoardSize } from '@/types/types'
+import { CellBox, BoardSize } from '@/types/types'
 import { lostModal } from './alerts'
 
 function touchingCells(row: number, column: number): [number, number][] {
@@ -15,7 +15,7 @@ function touchingCells(row: number, column: number): [number, number][] {
 }
 
 function isValidPosition(
-	board: Cell[][],
+	board: CellBox[][],
 	row: number,
 	column: number
 ): boolean {
@@ -27,7 +27,7 @@ function isValidPosition(
 	)
 }
 
-function randomUniquePos(board: Cell[][]): [number, number] {
+function randomUniquePos(board: CellBox[][]): [number, number] {
 	while (true) {
 		let randomRow = Math.floor(Math.random() * board.length)
 		let randomCol = Math.floor(Math.random() * board[0].length)
@@ -38,8 +38,8 @@ function randomUniquePos(board: Cell[][]): [number, number] {
 	}
 }
 
-function newEmptyBoard(rows: number, columns: number): Cell[][] {
-	const board: Cell[][] = []
+function newEmptyBoard(rows: number, columns: number): CellBox[][] {
+	const board: CellBox[][] = []
 
 	for (let i = 0; i < rows; i++) {
 		board[i] = []
@@ -59,14 +59,14 @@ function newEmptyBoard(rows: number, columns: number): Cell[][] {
 	return board
 }
 
-function addRandomMines(board: Cell[][], mines: number): void {
+function addRandomMines(board: CellBox[][], mines: number): void {
 	for (let i = 0; i < mines; i++) {
 		const [row, column] = randomUniquePos(board)
 		board[row][column] = { ...board[row][column], value: '*' }
 	}
 }
 
-function addNumbers(board: Cell[][]) {
+function addNumbers(board: CellBox[][]) {
 	for (let i = 0; i < board.length; i++) {
 		for (let j = 0; j < board[0].length; j++) {
 			const { value } = board[i][j]
@@ -95,10 +95,10 @@ function addNumbers(board: Cell[][]) {
 	}
 }
 
-function generateBoard(boardSize: BoardSize, mines: number): Cell[][] {
+function generateBoard(boardSize: BoardSize, mines: number): CellBox[][] {
 	const { rows, columns } = boardSize
 
-	const board: Cell[][] = newEmptyBoard(rows, columns)
+	const board: CellBox[][] = newEmptyBoard(rows, columns)
 
 	addRandomMines(board, mines)
 	addNumbers(board)
@@ -106,7 +106,7 @@ function generateBoard(boardSize: BoardSize, mines: number): Cell[][] {
 	return board
 }
 
-function revealNulls(board: Cell[][], row: number, column: number): void {
+function revealNulls(board: CellBox[][], row: number, column: number): void {
 	const touching = touchingCells(row, column)
 
 	for (let [i, j] of touching) {
@@ -129,8 +129,8 @@ function revealNulls(board: Cell[][], row: number, column: number): void {
 }
 
 function revealNotMines(
-	board: Cell[][],
-	cell: Cell,
+	board: CellBox[][],
+	cell: CellBox,
 	reset: () => void,
 	changeSettings: () => void
 ) {

@@ -1,12 +1,12 @@
 import { MouseEvent } from 'react'
-import { Cell } from '@/types/types'
+import { CellBox } from '@/types/types'
 import useStore from '@/store/store'
 import { lostModal, wonModal } from '@/utils/alerts'
 import { revealNulls, revealNotMines } from '@/utils/boards'
 import styles from './Cell.module.css'
 
 interface Props {
-	cell: Cell
+	cell: CellBox
 }
 
 export default function Cell({ cell }: Props): JSX.Element {
@@ -41,7 +41,7 @@ export default function Cell({ cell }: Props): JSX.Element {
 		setWinner(false)
 	}
 
-	const hasWon = (board: Cell[][]) => {
+	const hasWon = (board: CellBox[][]) => {
 		const toReveal = boardSize.rows * boardSize.columns - mines.total
 		const totalRevealed = board
 			.flat()
