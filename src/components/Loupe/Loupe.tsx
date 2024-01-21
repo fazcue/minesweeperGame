@@ -3,7 +3,8 @@ import styles from './Loupe.module.css'
 import Switch from '../Switch/Switch'
 
 export default function Loupe(): React.JSX.Element {
-	const { loupe, setLoupe } = useStore()
+	const loupe = useStore((state) => state.loupe)
+	const setLoupe = useStore((state) => state.setLoupe)
 
 	const onChange = () => {
 		setLoupe(!loupe)

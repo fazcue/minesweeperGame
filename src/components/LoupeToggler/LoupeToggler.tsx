@@ -2,7 +2,9 @@ import useStore from '@/store/store'
 import Switch from '../Switch/Switch'
 
 export default function LoupeToggler(): React.JSX.Element {
-	const { allowLoupe, setAllowLoupe, setLoupe } = useStore()
+	const allowLoupe = useStore((state) => state.allowLoupe)
+	const setAllowLoupe = useStore((state) => state.setAllowLoupe)
+	const setLoupe = useStore((state) => state.setLoupe)
 
 	const onChange = () => {
 		setAllowLoupe(!allowLoupe)

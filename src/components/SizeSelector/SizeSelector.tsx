@@ -3,7 +3,8 @@ import { SIZES } from '@/config/config'
 import styles from './SizeSelector.module.css'
 
 export default function SizeSelector(): React.JSX.Element {
-	const { setBoardSize, boardSize } = useStore()
+	const boardSize = useStore((state) => state.boardSize)
+	const setBoardSize = useStore((state) => state.setBoardSize)
 
 	const changeBoardSize = (rows: number, columns: number) => {
 		setBoardSize({ rows, columns })

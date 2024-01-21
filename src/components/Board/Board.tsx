@@ -8,7 +8,9 @@ import Helpers from '../Helpers/Helpers'
 import Timer from '../Timer/Timer'
 
 export default function Board(): React.JSX.Element {
-	const { mines, board, winner } = useStore()
+	const mines = useStore((state) => state.mines)
+	const board = useStore((state) => state.board)
+	const winner = useStore((state) => state.winner)
 
 	return (
 		<>

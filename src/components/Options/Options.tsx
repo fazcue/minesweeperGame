@@ -7,7 +7,8 @@ import MineMarkerToggler from '../MineMarkerToggler/MineMarkerToggler'
 import LoupeToggler from '../LoupeToggler/LoupeToggler'
 
 export default function Options(): React.JSX.Element {
-	const { togglePlaying, generateNewBoard } = useStore()
+	const togglePlaying = useStore((state) => state.togglePlaying)
+	const generateNewBoard = useStore((state) => state.generateNewBoard)
 
 	const startGame = () => {
 		generateNewBoard()

@@ -13,21 +13,19 @@ export default function Cell({ cell }: Props): React.JSX.Element {
 	const { id, value, revealed, isMine, isPossibleMine, position } = cell
 	const { row, column } = position
 
-	const {
-		board,
-		boardSize,
-		setBoard,
-		setMines,
-		resetGame,
-		resetSettings,
-		mines,
-		loupe,
-		allowMineMarker,
-		timer,
-		toggleTimer,
-		resetTimer,
-		setWinner,
-	} = useStore()
+	const board = useStore((state) => state.board)
+	const boardSize = useStore((state) => state.boardSize)
+	const setBoard = useStore((state) => state.setBoard)
+	const setMines = useStore((state) => state.setMines)
+	const resetGame = useStore((state) => state.resetGame)
+	const resetSettings = useStore((state) => state.resetSettings)
+	const mines = useStore((state) => state.mines)
+	const loupe = useStore((state) => state.loupe)
+	const allowMineMarker = useStore((state) => state.allowMineMarker)
+	const timer = useStore((state) => state.timer)
+	const toggleTimer = useStore((state) => state.toggleTimer)
+	const resetTimer = useStore((state) => state.resetTimer)
+	const setWinner = useStore((state) => state.setWinner)
 
 	const reset = () => {
 		resetGame()
