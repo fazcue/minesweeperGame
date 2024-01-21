@@ -1,9 +1,9 @@
 import Loupe from '../Loupe/Loupe'
 import styles from './Helpers.module.css'
-import useOptions from '@/store/options'
+import useStore from '@/store/store'
 
 export default function Helpers() {
-	const { allowLoupe } = useOptions()
+	const { allowLoupe } = useStore()
 
 	return <div className={styles.helpers}>{allowLoupe && <Loupe />}</div>
 }
