@@ -3,7 +3,7 @@ import { SIZES } from '@/config/config'
 import styles from './SizeSelector.module.css'
 
 export default function SizeSelector() {
-	const { setBoardSize, boardSize } = useStore((state) => state)
+	const { setBoardSize, boardSize } = useStore()
 
 	const changeBoardSize = (rows: number, columns: number) => {
 		setBoardSize({ rows, columns })
