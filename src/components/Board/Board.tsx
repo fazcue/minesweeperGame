@@ -2,15 +2,13 @@
 
 import useStore from '@/store/store'
 import Cell from '../Cell/Cell'
-import Confetti from 'react-confetti'
-import styles from './Board.module.css'
 import Helpers from '../Helpers/Helpers'
 import Timer from '../Timer/Timer'
+import styles from './Board.module.css'
 
 export default function Board(): React.JSX.Element {
 	const mines = useStore((state) => state.mines)
 	const board = useStore((state) => state.board)
-	const winner = useStore((state) => state.winner)
 
 	return (
 		<>
@@ -24,7 +22,6 @@ export default function Board(): React.JSX.Element {
 				</div>
 			))}
 			<Helpers />
-			{winner && <Confetti />}
 		</>
 	)
 }
