@@ -1,8 +1,8 @@
-import useOptions from '@/store/options'
+import useStore from '@/store/store'
 import Switch from '../Switch/Switch'
 
 export default function MineMarkerToggler() {
-	const { allowMineMarker, setAllowMineMarker } = useOptions()
+	const { allowMineMarker, setAllowMineMarker } = useStore()
 
 	const onChange = () => {
 		setAllowMineMarker(!allowMineMarker)
