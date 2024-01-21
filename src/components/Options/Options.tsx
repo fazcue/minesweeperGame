@@ -7,7 +7,7 @@ import MineMarkerToggler from '../MineMarkerToggler/MineMarkerToggler'
 import LoupeToggler from '../LoupeToggler/LoupeToggler'
 
 export default function Options() {
-	const { togglePlaying, generateNewBoard } = useStore((state) => state)
+	const { togglePlaying, generateNewBoard } = useStore()
 
 	const startGame = () => {
 		generateNewBoard()
