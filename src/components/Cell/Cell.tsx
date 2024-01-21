@@ -99,7 +99,7 @@ export default function Cell({ cell }: Props): JSX.Element {
 
 			// it it's null, reveal all surrounding cells
 			if (!value) {
-				revealNulls(newBoard, row, column)
+				revealNulls(newBoard, row, column, mines, setMines)
 			}
 
 			setBoard(newBoard)
@@ -138,7 +138,14 @@ export default function Cell({ cell }: Props): JSX.Element {
 		if (allowMineMarker) {
 			const newBoard = [...board]
 
-			revealNotMines(board, cell, resetGame, changeSettings)
+			revealNotMines(
+				board,
+				cell,
+				resetGame,
+				changeSettings,
+				mines,
+				setMines
+			)
 			setBoard(newBoard)
 		}
 	}

@@ -1,4 +1,4 @@
-import { CellBox, BoardSize } from '@/types/types'
+import { CellBox, BoardSize, Mines } from '@/types/types'
 import { lostModal } from './alerts'
 
 function touchingCells(row: number, column: number): [number, number][] {
@@ -106,23 +106,29 @@ function generateBoard(boardSize: BoardSize, mines: number): CellBox[][] {
 	return board
 }
 
-function revealNulls(board: CellBox[][], row: number, column: number): void {
+function revealNulls(
+	board: CellBox[][],
+	row: number,
+	column: number,
+	mines: Mines,
+	setMines: (mines: Mines) => void
+): void {
 	const touching = touchingCells(row, column)
 
 	for (let [i, j] of touching) {
 		if (isValidPosition(board, i, j) && !board[i][j].revealed) {
 			board[i][j].revealed = true
 
-			if (board[i][j].isMine) {
+			if (board[i][j].isMine || board[i][j].isPossibleMine) {
 				board[i][j].isMine = false
-			}
-
-			if (board[i][j].isPossibleMine) {
 				board[i][j].isPossibleMine = false
+
+				mines = { ...mines, discovered: mines.discovered - 1 }
+				setMines({ ...mines })
 			}
 
 			if (!board[i][j].value) {
-				revealNulls(board, i, j)
+				revealNulls(board, i, j, mines, setMines)
 			}
 		}
 	}
@@ -132,7 +138,9 @@ function revealNotMines(
 	board: CellBox[][],
 	cell: CellBox,
 	reset: () => void,
-	changeSettings: () => void
+	changeSettings: () => void,
+	mines: Mines,
+	setMines: (mines: Mines) => void
 ) {
 	const { value, position } = cell
 	const { row, column } = position
@@ -177,10 +185,17 @@ function revealNotMines(
 
 				// it it's null, reveal all surrounding cells
 				if (!value) {
-					revealNulls(board, row, column)
+					revealNulls(board, row, column, mines, setMines)
 				}
 
-				revealNotMines(board, board[row][column], reset, changeSettings)
+				revealNotMines(
+					board,
+					board[row][column],
+					reset,
+					changeSettings,
+					mines,
+					setMines
+				)
 				return true
 			}
 

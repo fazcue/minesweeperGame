@@ -14,7 +14,7 @@ Dependencies:
 
 ## Known issues
 
--   if wrong cell is marked as mine when revealing nulls, then mines to discover counter will have missing mines
+-   when active: mine marker & loupe. If loupe is active and double click on a number reveals all the left cells, then the game does not show the 'wonModal' as expected
 
 ## How to run
 
