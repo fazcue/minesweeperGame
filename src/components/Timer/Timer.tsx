@@ -1,5 +1,5 @@
-import useTimer from '@/hooks/useTimer'
 import useStore from '@/store/store'
+import useTimer from '@/hooks/useTimer'
 
 export default function Timer(): React.JSX.Element {
 	const timer = useStore((state) => state.timer)

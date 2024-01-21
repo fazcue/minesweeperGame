@@ -1,5 +1,5 @@
-import styles from './DifficultySlider.module.css'
 import useStore from '@/store/store'
+import styles from './DifficultySlider.module.css'
 
 export default function DifficultySlider(): React.JSX.Element {
 	const boardSize = useStore((state) => state.boardSize)
