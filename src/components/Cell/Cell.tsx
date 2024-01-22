@@ -144,7 +144,14 @@ export default function Cell({ cell }: Props): React.JSX.Element {
 				mines,
 				setMines
 			)
+
 			setBoard(newBoard)
+
+			if (hasWon(newBoard)) {
+				wonModal({ reset, changeSettings })
+				toggleTimer()
+				setWinner(true)
+			}
 		}
 	}
 
