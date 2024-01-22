@@ -14,7 +14,7 @@ Dependencies:
 
 ## Known issues
 
--   when active: mine marker. If double click on a number reveals all the left cells, then the game does not show the 'wonModal' as expected
+-   none so far
 
 ## How to run
 
