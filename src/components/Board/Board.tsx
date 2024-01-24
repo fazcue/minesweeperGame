@@ -11,7 +11,7 @@ export default function Board(): React.JSX.Element {
 	const board = useStore((state) => state.board)
 
 	return (
-		<>
+		<div className={styles.board}>
 			<p>Mines to discover: {mines.total - mines.discovered}</p>
 			<Timer />
 			{board.map((row, i) => (
@@ -22,6 +22,6 @@ export default function Board(): React.JSX.Element {
 				</div>
 			))}
 			<Helpers />
-		</>
+		</div>
 	)
 }
