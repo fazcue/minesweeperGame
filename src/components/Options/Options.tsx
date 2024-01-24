@@ -1,3 +1,5 @@
+'use client'
+
 import useStore from '@/store/store'
 import SizeSelector from '../SizeSelector/SizeSelector'
 import DifficultySlider from '../DifficultySlider/DifficultySlider'
@@ -16,7 +18,7 @@ export default function Options(): React.JSX.Element {
 	}
 
 	return (
-		<>
+		<div className={styles.options}>
 			<SizeSelector />
 			<EmptySpace />
 			<DifficultySlider />
@@ -28,6 +30,6 @@ export default function Options(): React.JSX.Element {
 			<button onClick={startGame} className={styles.playButton}>
 				PLAY
 			</button>
-		</>
+		</div>
 	)
 }
