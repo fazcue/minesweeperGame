@@ -1,4 +1,3 @@
-import { revalidatePath } from 'next/cache'
 import PresetGame from '@/components/PresetGame/PresetGame'
 import { getGamesSlugs, getGames } from '@/db/client'
 
@@ -15,10 +14,6 @@ export async function generateStaticParams() {
 async function getGame(slug: string) {
 	const games = await getGames()
 	const game = games.find((game) => game.slug === slug) ?? null
-
-	if (game) {
-		revalidatePath('/')
-	}
 
 	return game
 }
