@@ -1,5 +1,3 @@
-import { cache } from 'react'
-
 import { createClient } from '@libsql/client'
 import { parseGames, parseSlugs } from './parsers'
 
@@ -8,12 +6,12 @@ const client = createClient({
 	authToken: process.env.TURSO_AUTH_TOKEN ?? '',
 })
 
-export const getGames = cache(async () => {
+export const getGames = async () => {
 	const result = await client.execute('SELECT * FROM games')
 	return parseGames(result.rows)
-})
+}
 
-export const getGamesSlugs = cache(async () => {
+export const getGamesSlugs = async () => {
 	const result = await client.execute('SELECT slug FROM games')
 	return parseSlugs(result.rows)
-})
+}
