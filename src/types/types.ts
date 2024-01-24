@@ -21,3 +21,16 @@ export type Icons = {
 	icon: string
 	message: string
 }
+
+export type Game = {
+	id: number
+	name: string
+	mines: number
+	mineMarker: boolean
+	loupe: boolean
+	boardWidth: number
+	boardHeight: number
+	description: string
+	timer: boolean
+	slug: string
+}
