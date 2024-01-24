@@ -1,5 +1,6 @@
 import PresetGame from '@/components/PresetGame/PresetGame'
 import { getGamesSlugs, getGames } from '@/db/client'
+import { notFound } from 'next/navigation'
 
 interface Props {
 	params: {
@@ -21,9 +22,7 @@ async function getGame(slug: string) {
 async function GamePage({ params }: Props) {
 	const game = await getGame(params.slug)
 
-	if (!game) {
-		return <div>Game not found</div>
-	}
+	if (!game) notFound()
 
 	return <PresetGame game={game} />
 }
