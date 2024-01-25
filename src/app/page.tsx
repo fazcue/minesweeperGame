@@ -8,6 +8,7 @@ export default function Home(): React.JSX.Element {
 			<CustomGame />
 			<EmptySpace height={50} />
 			<GameList />
+			<EmptySpace height={50} />
 		</div>
 	)
 }
