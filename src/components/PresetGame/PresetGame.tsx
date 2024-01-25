@@ -5,6 +5,7 @@ import useStore from '@/store/store'
 import Board from '@/components/Board/Board'
 import Confetti from 'react-confetti'
 import Options from '@/components/Options/Options'
+import { useEffect } from 'react'
 
 interface Props {
 	game: Game
@@ -32,6 +33,12 @@ export default function PresetGame({ game }: Props) {
 		allowLoupe,
 		allowMineMarker,
 	})
+
+	useEffect(() => {
+		useStore.setState({
+			playing: false,
+		})
+	}, [])
 
 	return (
 		<div>
