@@ -1,0 +1,18 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0a0a0a;
+    height: 120px;
+    width: 100%;
+}
+
+.footer a {
+    font-weight: bold;
+    opacity: 0.9;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
