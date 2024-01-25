@@ -15,16 +15,23 @@ export default function PresetGame({ game }: Props) {
 		id,
 		name,
 		mines: INITIAL_MINES,
-		mineMarker,
+		allowMineMarker,
 		boardWidth,
 		boardHeight,
 		description,
 		timer,
-		loupe,
+		allowLoupe,
 	} = game
 
 	const playing = useStore((state) => state.playing)
 	const winner = useStore((state) => state.winner)
+
+	useStore.setState({
+		boardSize: { rows: boardHeight, columns: boardWidth },
+		mines: { total: INITIAL_MINES, discovered: 0 },
+		allowLoupe,
+		allowMineMarker,
+	})
 
 	return (
 		<div>
