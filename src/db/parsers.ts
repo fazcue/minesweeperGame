@@ -25,9 +25,8 @@ export const parseGames = (result: Row[]): Game[] => {
 			id: typeof row.id === 'number' ? row.id : 0,
 			name: typeof row.name === 'string' ? row.name : '',
 			mines: typeof row.mines === 'number' ? row.mines : 0,
-			mineMarker:
-				typeof row.mineMarker === 'boolean' ? row.mineMarker : false,
-			loupe: typeof row.loupe === 'boolean' ? row.loupe : false,
+			allowMineMarker: row.mineMarker === 1 ? true : false,
+			allowLoupe: row.loupe === 1 ? true : false,
 			boardWidth: typeof row.boardWidth === 'number' ? row.boardWidth : 0,
 			boardHeight:
 				typeof row.boardHeight === 'number' ? row.boardHeight : 0,
