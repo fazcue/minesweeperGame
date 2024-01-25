@@ -26,8 +26,8 @@ export type Game = {
 	id: number
 	name: string
 	mines: number
-	mineMarker: boolean
-	loupe: boolean
+	allowMineMarker: boolean
+	allowLoupe: boolean
 	boardWidth: number
 	boardHeight: number
 	description: string
