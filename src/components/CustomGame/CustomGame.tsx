@@ -10,16 +10,13 @@ export default function CustomGame() {
 	const winner = useStore((state) => state.winner)
 
 	return (
-		<div onContextMenu={(e) => e.preventDefault()}>
-			{playing ? (
-				<>
-					<Board />
-				</>
-			) : (
-				<>
-					<Options />
-				</>
-			)}
+		<div
+			onContextMenu={(e) => e.preventDefault()}
+			className="container"
+			id="custom-game"
+		>
+			<h1>Custom MineSweeper</h1>
+			{playing ? <Board /> : <Options />}
 			{winner && <Confetti />}
 		</div>
 	)
