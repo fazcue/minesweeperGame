@@ -8,7 +8,7 @@ export default async function GameList() {
 	if (games) {
 		return (
 			<>
-				<h2>Game List</h2>
+				<h2 id="preset-games">Preset Games</h2>
 				<EmptySpace />
 				{games.map((game) => (
 					<GameCard key={game.id} game={game} />
