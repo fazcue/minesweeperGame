@@ -8,7 +8,13 @@ import MineMarkerToggler from '../MineMarkerToggler/MineMarkerToggler'
 import LoupeToggler from '../LoupeToggler/LoupeToggler'
 import styles from './Options.module.css'
 
-export default function Options(): React.JSX.Element {
+interface Props {
+	asInfoOnly?: boolean
+}
+
+export default function Options({
+	asInfoOnly = false,
+}: Props): React.JSX.Element {
 	const togglePlaying = useStore((state) => state.togglePlaying)
 	const generateNewBoard = useStore((state) => state.generateNewBoard)
 
@@ -19,13 +25,13 @@ export default function Options(): React.JSX.Element {
 
 	return (
 		<div className={styles.options}>
-			<SizeSelector />
+			<SizeSelector asInfoOnly={asInfoOnly} />
 			<EmptySpace />
-			<DifficultySlider />
+			<DifficultySlider asInfoOnly={asInfoOnly} />
 			<EmptySpace />
-			<MineMarkerToggler />
+			<MineMarkerToggler asInfoOnly={asInfoOnly} />
 			<EmptySpace />
-			<LoupeToggler />
+			<LoupeToggler asInfoOnly={asInfoOnly} />
 			<EmptySpace />
 			<button onClick={startGame} className={styles.playButton}>
 				PLAY

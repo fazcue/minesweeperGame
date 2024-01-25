@@ -40,7 +40,7 @@ export default function PresetGame({ game }: Props) {
 					<>
 						<h1>{name}</h1>
 						<p>{description}</p>
-						<Options />
+						<Options asInfoOnly />
 					</>
 				)}
 				{winner && <Confetti />}

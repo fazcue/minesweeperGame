@@ -2,7 +2,11 @@ import useStore from '@/store/store'
 import { SIZES } from '@/config/config'
 import styles from './SizeSelector.module.css'
 
-export default function SizeSelector(): React.JSX.Element {
+interface Props {
+	asInfoOnly?: boolean
+}
+
+export default function SizeSelector({ asInfoOnly }: Props): React.JSX.Element {
 	const boardSize = useStore((state) => state.boardSize)
 	const setBoardSize = useStore((state) => state.setBoardSize)
 
@@ -15,6 +19,7 @@ export default function SizeSelector(): React.JSX.Element {
 			<button
 				key={`${rows}-${columns}`}
 				onClick={() => changeBoardSize(rows, columns)}
+				disabled={asInfoOnly}
 				className={`${styles.sizeButton} ${
 					boardSize.rows === rows && styles.selected
 				}`}

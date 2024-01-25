@@ -1,7 +1,13 @@
 import useStore from '@/store/store'
 import Switch from '../Switch/Switch'
 
-export default function MineMarkerToggler(): React.JSX.Element {
+interface Props {
+	asInfoOnly?: boolean
+}
+
+export default function MineMarkerToggler({
+	asInfoOnly = false,
+}: Props): React.JSX.Element {
 	const allowMineMarker = useStore((state) => state.allowMineMarker)
 	const setAllowMineMarker = useStore((state) => state.setAllowMineMarker)
 
@@ -12,7 +18,11 @@ export default function MineMarkerToggler(): React.JSX.Element {
 	return (
 		<>
 			<p>mine marker</p>
-			<Switch onChange={onChange} checked={allowMineMarker} />
+			<Switch
+				onChange={onChange}
+				checked={allowMineMarker}
+				asInfoOnly={asInfoOnly}
+			/>
 		</>
 	)
 }

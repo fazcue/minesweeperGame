@@ -1,7 +1,13 @@
 import useStore from '@/store/store'
 import styles from './DifficultySlider.module.css'
 
-export default function DifficultySlider(): React.JSX.Element {
+interface Props {
+	asInfoOnly?: boolean
+}
+
+export default function DifficultySlider({
+	asInfoOnly = false,
+}: Props): React.JSX.Element {
 	const boardSize = useStore((state) => state.boardSize)
 	const setMines = useStore((state) => state.setMines)
 	const mines = useStore((state) => state.mines)
@@ -21,6 +27,7 @@ export default function DifficultySlider(): React.JSX.Element {
 				className={styles.slider}
 				step="1"
 				onChange={changeSlider}
+				disabled={asInfoOnly}
 			></input>
 			<small>{mines.total} mines</small>
 		</>
