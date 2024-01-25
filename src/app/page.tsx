@@ -5,7 +5,6 @@ import GameList from '@/components/GameList/GameList'
 export default function Home(): React.JSX.Element {
 	return (
 		<div className="container">
-			<h1>MineSweeper</h1>
 			<CustomGame />
 			<EmptySpace height={50} />
 			<GameList />
