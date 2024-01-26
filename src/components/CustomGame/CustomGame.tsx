@@ -13,6 +13,7 @@ export default function CustomGame() {
 	useEffect(() => {
 		useStore.setState({
 			playing: false,
+			asInfoOnly: false,
 		})
 	}, [])
 

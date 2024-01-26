@@ -1,3 +1,4 @@
+import useStore from '@/store/store'
 import styles from './Switch.module.css'
 
 interface Props {
@@ -5,15 +6,12 @@ interface Props {
 	checked: boolean
 }
 
-interface Props {
-	asInfoOnly?: boolean
-}
-
 export default function Switch({
 	onChange,
-	asInfoOnly = false,
 	checked,
 }: Props): React.JSX.Element {
+	const asInfoOnly = useStore((state) => state.asInfoOnly)
+
 	return (
 		<label className={styles.switch}>
 			<input

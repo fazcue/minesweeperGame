@@ -1,13 +1,7 @@
 import useStore from '@/store/store'
 import Switch from '../Switch/Switch'
 
-interface Props {
-	asInfoOnly?: boolean
-}
-
-export default function LoupeToggler({
-	asInfoOnly = false,
-}: Props): React.JSX.Element {
+export default function LoupeToggler(): React.JSX.Element {
 	const allowLoupe = useStore((state) => state.allowLoupe)
 	const setAllowLoupe = useStore((state) => state.setAllowLoupe)
 	const setLoupe = useStore((state) => state.setLoupe)
@@ -20,11 +14,7 @@ export default function LoupeToggler({
 	return (
 		<>
 			<p>loupe</p>
-			<Switch
-				onChange={onChange}
-				checked={allowLoupe}
-				asInfoOnly={asInfoOnly}
-			/>
+			<Switch onChange={onChange} checked={allowLoupe} />
 		</>
 	)
 }
