@@ -1,9 +1,9 @@
 .card {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; */
     margin: 8px;
-    width: 100%;
+    width: 90%;
     max-width: 800px;
     cursor: pointer;
     background-color: #222;
