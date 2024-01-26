@@ -1,5 +1,6 @@
 import useStore from '@/store/store'
 import styles from './Switch.module.css'
+import classNames from 'classnames'
 
 interface Props {
 	onChange: () => void
@@ -12,6 +13,8 @@ export default function Switch({
 }: Props): React.JSX.Element {
 	const asInfoOnly = useStore((state) => state.asInfoOnly)
 
+	const switchClass = classNames(styles.slider, styles.round)
+
 	return (
 		<label className={styles.switch}>
 			<input
@@ -20,7 +23,7 @@ export default function Switch({
 				checked={checked}
 				disabled={asInfoOnly}
 			/>
-			<span className={`${styles.slider} ${styles.round}`}></span>
+			<span className={switchClass}></span>
 		</label>
 	)
 }

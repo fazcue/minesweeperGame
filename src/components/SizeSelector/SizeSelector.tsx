@@ -1,6 +1,7 @@
 import useStore from '@/store/store'
 import { SIZES } from '@/config/config'
 import styles from './SizeSelector.module.css'
+import classNames from 'classnames'
 
 export default function SizeSelector(): React.JSX.Element {
 	const boardSize = useStore((state) => state.boardSize)
@@ -12,18 +13,22 @@ export default function SizeSelector(): React.JSX.Element {
 	}
 
 	const Sizes = (): React.JSX.Element[] => {
-		return SIZES.map(({ rows, columns }) => (
-			<button
-				key={`${rows}-${columns}`}
-				onClick={() => changeBoardSize(rows, columns)}
-				disabled={asInfoOnly}
-				className={`${styles.sizeButton} ${
-					boardSize.rows === rows && styles.selected
-				}`}
-			>
-				{rows}x{columns}
-			</button>
-		))
+		return SIZES.map(({ rows, columns }) => {
+			const btnClass = classNames(styles.sizeButton, {
+				[styles.selected]: boardSize.rows === rows,
+			})
+
+			return (
+				<button
+					key={`${rows}-${columns}`}
+					onClick={() => changeBoardSize(rows, columns)}
+					disabled={asInfoOnly}
+					className={btnClass}
+				>
+					{rows}x{columns}
+				</button>
+			)
+		})
 	}
 
 	return (

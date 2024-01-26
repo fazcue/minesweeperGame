@@ -4,6 +4,7 @@ import useStore from '@/store/store'
 import { lostModal, wonModal } from '@/utils/alerts'
 import { revealNulls, revealNotMines } from '@/utils/boards'
 import styles from './Cell.module.css'
+import classNames from 'classnames'
 
 interface Props {
 	cell: CellBox
@@ -26,6 +27,12 @@ export default function Cell({ cell }: Props): React.JSX.Element {
 	const toggleTimer = useStore((state) => state.toggleTimer)
 	const resetTimer = useStore((state) => state.resetTimer)
 	const setWinner = useStore((state) => state.setWinner)
+
+	const cellClass = classNames(styles.cell, {
+		[styles['num' + value]]: revealed && value,
+		[styles.mine]: isMine,
+		[styles.possibleMine]: isPossibleMine,
+	})
 
 	const reset = () => {
 		resetGame()
@@ -158,11 +165,7 @@ export default function Cell({ cell }: Props): React.JSX.Element {
 	return (
 		<button
 			key={id}
-			className={`${styles.cell} ${
-				revealed && value ? styles['num' + value] : ''
-			} ${isMine ? styles.mine : ''} ${
-				isPossibleMine ? styles.possibleMine : ''
-			}`}
+			className={cellClass}
 			onClick={onClick}
 			onContextMenu={onContextMenu}
 			onDoubleClick={onDoubleClick}
