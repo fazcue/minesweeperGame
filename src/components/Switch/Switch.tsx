@@ -5,14 +5,14 @@ import classNames from 'classnames'
 interface Props {
 	onChange: () => void
 	checked: boolean
+	asInfoOnly?: boolean
 }
 
 export default function Switch({
 	onChange,
 	checked,
+	asInfoOnly = false,
 }: Props): React.JSX.Element {
-	const asInfoOnly = useStore((state) => state.asInfoOnly)
-
 	const switchClass = classNames(styles.slider, styles.round)
 
 	return (

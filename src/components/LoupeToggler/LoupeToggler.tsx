@@ -6,6 +6,7 @@ export default function LoupeToggler(): React.JSX.Element {
 	const setAllowLoupe = useStore((state) => state.setAllowLoupe)
 
 	const setIsLouping = useStore((state) => state.setIsLouping)
+	const asInfoOnly = useStore((state) => state.asInfoOnly)
 
 	const onChange = () => {
 		setAllowLoupe(!allowLoupe)
@@ -15,7 +16,11 @@ export default function LoupeToggler(): React.JSX.Element {
 	return (
 		<>
 			<p>loupe</p>
-			<Switch onChange={onChange} checked={allowLoupe} />
+			<Switch
+				onChange={onChange}
+				checked={allowLoupe}
+				asInfoOnly={asInfoOnly}
+			/>
 		</>
 	)
 }
