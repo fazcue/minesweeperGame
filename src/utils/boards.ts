@@ -1,5 +1,6 @@
-import { CellBox, BoardSize, Mines } from '@/types/types'
+import { CellBox, BoardSize } from '@/types/types'
 import { lostModal } from './alerts'
+import useStore from '@/store/store'
 
 function touchingCells(row: number, column: number): [number, number][] {
 	return [
@@ -106,49 +107,45 @@ function generateBoard(boardSize: BoardSize, mines: number): CellBox[][] {
 	return board
 }
 
-function revealNulls(
-	board: CellBox[][],
+function getNulls(
 	row: number,
 	column: number,
-	mines: Mines,
-	setMines: (mines: Mines) => void
-): void {
+	board?: CellBox[][],
+	nulls?: CellBox[]
+): CellBox[] {
+	const currentNulls = nulls || []
+	const currentBoard = board || useStore.getState().board
+
 	const touching = touchingCells(row, column)
 
-	for (let [i, j] of touching) {
-		if (isValidPosition(board, i, j) && !board[i][j].revealed) {
-			board[i][j].revealed = true
+	for (const [i, j] of touching) {
+		const isValid =
+			isValidPosition(currentBoard, i, j) && !currentBoard[i][j].revealed
 
-			if (board[i][j].isMine || board[i][j].isPossibleMine) {
-				board[i][j].isMine = false
-				board[i][j].isPossibleMine = false
+		if (isValid) {
+			const currentCell = { ...currentBoard[i][j], revealed: true }
 
-				mines = { ...mines, discovered: mines.discovered - 1 }
-				setMines({ ...mines })
-			}
+			// update cell to prevent infinite recursion
+			currentBoard[i][j] = currentCell
 
-			if (!board[i][j].value) {
-				revealNulls(board, i, j, mines, setMines)
+			currentNulls.push(currentCell)
+
+			if (!currentCell.value) {
+				getNulls(i, j, currentBoard, currentNulls)
 			}
 		}
 	}
+
+	return currentNulls
 }
 
-function revealNotMines(
+function hasCellAllMinesMarked(
 	board: CellBox[][],
-	cell: CellBox,
-	reset: () => void,
-	changeSettings: () => void,
-	mines: Mines,
-	setMines: (mines: Mines) => void
-) {
-	const { value, position } = cell
-	const { row, column } = position
-
-	// count touching cells marked as possible mine
+	row: number,
+	column: number,
+	touching: [number, number][]
+): boolean {
 	let count = 0
-
-	const touching = touchingCells(row, column)
 
 	touching.forEach(([row, column]) => {
 		if (
@@ -159,44 +156,53 @@ function revealNotMines(
 		}
 	})
 
-	// if it's not the right number, don't reveal
-	if (count !== value) {
-		return
+	return count === board[row][column].value
+}
+
+function revealNotMines(
+	row: number,
+	column: number,
+	board?: CellBox[][],
+	notMines?: CellBox[]
+): CellBox[] {
+	const cuurrentNotMines = notMines || []
+	const currentBoard = board || useStore.getState().board
+	const touching = touchingCells(row, column)
+
+	// If cell does not have all mines marked, do nothing
+	if (!hasCellAllMinesMarked(currentBoard, row, column, touching)) {
+		return []
 	}
 
-	touching.every(([row, column]) => {
-		if (isValidPosition(board, row, column)) {
-			const { isMine, isPossibleMine, value, revealed } =
-				board[row][column]
+	touching.every(([i, j]) => {
+		if (isValidPosition(currentBoard, i, j)) {
+			const currentCell = { ...currentBoard[i][j] }
 
 			// if it's mark as a possible mine, don't reveal it
-			if (isMine || isPossibleMine) {
+			if (currentCell.isMine || currentCell.isPossibleMine) {
 				return true
 			}
 
 			// it it's a mine, game over
-			if (value === '*') {
-				lostModal({ reset, changeSettings })
+			if (currentCell.value === '*') {
+				lostModal()
 				return false
 			}
 
-			if (!revealed) {
-				board[row][column].revealed = true
+			if (!currentCell.revealed) {
+				currentCell.revealed = true
 
-				// it it's null, reveal all surrounding cells
-				if (!value) {
-					revealNulls(board, row, column, mines, setMines)
+				// update cell to prevent infinite recursion
+				currentBoard[i][j] = currentCell
+
+				cuurrentNotMines.push(currentCell)
+
+				// if it's null, reveal all surrounding cells
+				if (!currentCell.value) {
+					cuurrentNotMines.push(...getNulls(i, j, currentBoard))
 				}
 
-				revealNotMines(
-					board,
-					board[row][column],
-					reset,
-					changeSettings,
-					mines,
-					setMines
-				)
-				return true
+				revealNotMines(i, j, currentBoard, cuurrentNotMines)
 			}
 
 			return true
@@ -204,6 +210,26 @@ function revealNotMines(
 
 		return true
 	})
+
+	return cuurrentNotMines
 }
 
-export { generateBoard, revealNulls, revealNotMines }
+const hasWon = () => {
+	const board = useStore.getState().board
+	const mines = useStore.getState().mines
+
+	const toReveal = board[0].length * board.length - mines.total
+	const totalRevealed = board
+		.flat()
+		.reduce((acc, cell) => acc + (cell.revealed ? 1 : 0), 0)
+
+	return totalRevealed === toReveal
+}
+
+const isLoupeable = (cell: CellBox): boolean => {
+	const isLouping = useStore.getState().isLouping
+
+	return isLouping && !cell.isMine && !cell.isPossibleMine
+}
+
+export { generateBoard, getNulls, revealNotMines, hasWon, isLoupeable }

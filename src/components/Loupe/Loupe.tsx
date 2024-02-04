@@ -3,18 +3,17 @@ import styles from './Loupe.module.css'
 import Switch from '../Switch/Switch'
 
 export default function Loupe(): React.JSX.Element {
-	const loupe = useStore((state) => state.loupe)
-	const setLoupe = useStore((state) => state.setLoupe)
+	const isLouping = useStore((state) => state.isLouping)
+	const setIsLouping = useStore((state) => state.setIsLouping)
 
 	const onChange = () => {
-		setLoupe(!loupe)
-		console.log('loupe')
+		setIsLouping(!isLouping)
 	}
 
 	return (
 		<div className={styles.loupe}>
 			<p>👀</p>
-			<Switch onChange={onChange} checked={loupe} />
+			<Switch onChange={onChange} checked={isLouping} />
 		</div>
 	)
 }

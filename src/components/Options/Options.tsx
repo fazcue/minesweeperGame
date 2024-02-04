@@ -17,6 +17,8 @@ export default function Options({
 	asInfoOnly = false,
 }: Props): React.JSX.Element {
 	const togglePlaying = useStore((state) => state.togglePlaying)
+	const toggleTimer = useStore((state) => state.toggleTimer)
+	const resetSettings = useStore((state) => state.resetSettings)
 	const generateNewBoard = useStore((state) => state.generateNewBoard)
 	const setAsInfoOnly = useStore((state) => state.setAsInfoOnly)
 
@@ -27,8 +29,10 @@ export default function Options({
 	}, [asInfoOnly, setAsInfoOnly])
 
 	const startGame = () => {
+		resetSettings()
 		generateNewBoard()
 		togglePlaying()
+		toggleTimer()
 	}
 
 	return (

@@ -10,7 +10,7 @@
     border: 0;
     font-size: 22px;
     opacity: 1;
-    transition: 0.05s ease-in-out;
+    /* transition: 0.05s ease-in-out; */
 }
 
 .cell:disabled {

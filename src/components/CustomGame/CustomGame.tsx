@@ -1,8 +1,8 @@
 'use client'
 
-import Options from '@/components/Options/Options'
-import Board from '@/components/Board/Board'
 import useStore from '@/store/store'
+import GameBoard from '../GameBoard/GameBoard'
+import Options from '@/components/Options/Options'
 import Confetti from 'react-confetti'
 import { useEffect } from 'react'
 
@@ -24,7 +24,7 @@ export default function CustomGame() {
 			id="custom-game"
 		>
 			<h1>Custom MineSweeper</h1>
-			{playing ? <Board /> : <Options />}
+			{playing ? <GameBoard /> : <Options />}
 			{winner && <Confetti />}
 		</div>
 	)

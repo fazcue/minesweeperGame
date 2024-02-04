@@ -2,7 +2,8 @@ import { StateCreator } from 'zustand'
 
 import { BoardSlice } from './boardSlice'
 import { OptionsSlice } from './optionsSlice'
-import { LoupeSlice } from './loupeSlice'
+import { GameSlice } from './gameSlice'
+import { TimerSlice } from './timerSlice'
 
 export interface SharedSlice {
 	resetGame: () => void
@@ -10,22 +11,30 @@ export interface SharedSlice {
 }
 
 export const sharedSlice: StateCreator<
-	BoardSlice & OptionsSlice & LoupeSlice,
+	BoardSlice & OptionsSlice & GameSlice & TimerSlice,
 	[],
 	[],
 	SharedSlice
 > = (set, get) => ({
 	resetGame: () => {
 		get().generateNewBoard()
-		set({ playing: true, mines: { ...get().mines, discovered: 0 } })
-		set({ mines: { ...get().mines, discovered: 0 } })
-		set({ loupe: false })
+		set({
+			playing: true,
+			isLouping: false,
+			mines: { ...get().mines, discovered: 0 },
+			winner: false,
+			timer: true,
+			currentTime: 0,
+		})
 	},
 	resetSettings: () => {
 		set({
 			playing: false,
-			loupe: false,
+			isLouping: false,
 			mines: { ...get().mines, discovered: 0 },
+			winner: false,
+			timer: false,
+			currentTime: 0,
 		})
 	},
 })

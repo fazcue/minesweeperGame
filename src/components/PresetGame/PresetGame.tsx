@@ -2,10 +2,10 @@
 
 import { Game } from '@/types/types'
 import useStore from '@/store/store'
-import Board from '@/components/Board/Board'
 import Confetti from 'react-confetti'
 import Options from '@/components/Options/Options'
 import { useEffect } from 'react'
+import GameBoard from '../GameBoard/GameBoard'
 
 interface Props {
 	game: Game
@@ -13,14 +13,12 @@ interface Props {
 
 export default function PresetGame({ game }: Props) {
 	const {
-		id,
 		name,
 		mines: INITIAL_MINES,
 		allowMineMarker,
 		boardWidth,
 		boardHeight,
 		description,
-		timer,
 		allowLoupe,
 	} = game
 
@@ -47,9 +45,7 @@ export default function PresetGame({ game }: Props) {
 				onContextMenu={(e) => e.preventDefault()}
 			>
 				{playing ? (
-					<>
-						<Board />
-					</>
+					<GameBoard />
 				) : (
 					<>
 						<h1>{name}</h1>
